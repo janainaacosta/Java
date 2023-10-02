@@ -29,6 +29,7 @@ public class Cadastrar extends javax.swing.JFrame {
     public String nCidade;
     public String nCEP;
     public String nEndereco;
+    public String nUF;
 
     public String nTelefone;
     public String nEmail;
