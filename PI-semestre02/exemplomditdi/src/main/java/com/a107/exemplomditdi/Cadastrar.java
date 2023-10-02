@@ -15,7 +15,7 @@ import javax.swing.border.LineBorder;
  * @author janaina costa 
  *
  */
-public class Alterar extends javax.swing.JFrame {
+public class Cadastrar extends javax.swing.JFrame {
 
     public String nCPF;
     public String nNome;
@@ -35,41 +35,12 @@ public class Alterar extends javax.swing.JFrame {
     public String nEmail;
 
     /**
-     * Creates new form TelaCadastroCliente 
+     * Creates new form TelaCadastroCliente que
      */
-    public Alterar() {
+    public Cadastrar() {
         initComponents();
     }
 
-    public void pegarDados(
-            String CPF, String nome, String logradouro, 
-            String numero, String bairro, String cidade, String UF, String CEP,
-            String telefone, String email, String sexo, String estadoCivil, 
-            String dataNasc, String endereco) {
-
-        // Setar os campos de texto com os dados recebidos
-        txtCPF.setText(CPF);
-        txtNome.setText(nome);
-        txtLogradouro.setText(logradouro);
-        txtNumeroEndereco.setText(numero);
-        txtBairro.setText(bairro);
-        txtCidade.setText(cidade);
-
-        String sexoRecebido = sexo;
-        slcSexo.setSelectedItem(sexoRecebido);
-
-        String civilRecebido = estadoCivil;
-        slcEstadoCivil.setSelectedItem(civilRecebido);
-
-        String estadoRecebido = UF;
-        slcUf.setSelectedItem(estadoRecebido);
-
-        txtCEP.setText(CEP);
-        txtTelefone.setText(telefone);
-        txtEmail.setText(email);
-        txtDataNasc.setText(dataNasc);
-
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -447,12 +418,14 @@ public class Alterar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void enviar() {
+    public void criar() {
         Clientes tabela = new Clientes();
 
         tabela.setVisible(false);
-        tabela.inserirDados(nNome, nCPF, nEndereco,nTelefone,
-                nEmail,nSexo, nEstadoCivil, nDataNasc);
+        tabela.criar_pessoa(nCPF,nNome,nSexo,nEstadoCivil,
+                nDataNasc,nLogradouro,nNumero,nBairro,
+                nCidade,nUF,nCEP,nTelefone,nEmail);
+        
 
         tabela.setVisible(true);
     }
@@ -466,7 +439,7 @@ public class Alterar extends javax.swing.JFrame {
         // TODO add your handling code here:
         LineBorder redBorder = new LineBorder(Color.RED); 
         LineBorder blackBorder = new LineBorder(Color.BLACK); 
-        boolean flag = true; 
+        boolean flag = true; // Initialize flag to true
 
         String CEPDigitado = txtCEP.getText();
         String logradouroDigitado = txtLogradouro.getText();
@@ -513,18 +486,20 @@ public class Alterar extends javax.swing.JFrame {
 
         Object selectedItem = slcUf.getSelectedItem();
 
-        if (selectedItem == null || selectedItem.toString()
+        if (selectedItem
+                == null || selectedItem.toString()
                         .equals("Selecione...")) {
-            JOptionPane.showMessageDialog(null,
-                    "Selecione o UF","Alerta", 
+            JOptionPane.showMessageDialog(null, 
+                    "Selecione o UF", "Alerta", 
                     JOptionPane.WARNING_MESSAGE);
             flag = false;
-        }
-        else {
+        } else {
             UFDigitado = selectedItem.toString();
         }
 
-        String cpfWithoutFormatting = txtCEP.getText().replace("-", "").trim();
+        String cpfWithoutFormatting = txtCEP.getText()
+                .replace("-", "")
+                .trim();
 
         if (cpfWithoutFormatting.equals(
                 "")) {
@@ -545,7 +520,6 @@ public class Alterar extends javax.swing.JFrame {
         if (flag) { 
             pnlGuias.setSelectedIndex(2);
         }
-
 
     }//GEN-LAST:event_btnConfirmar1ActionPerformed
 
@@ -568,8 +542,7 @@ public class Alterar extends javax.swing.JFrame {
             txtNome.setForeground(Color.RED);
             txtNome.setBorder(redBorder);
             flag = false;
-        } 
-        else {
+        } else {
             txtNome.setForeground(Color.BLACK);
             txtNome.setBorder(blackBorder);
         }
@@ -578,11 +551,11 @@ public class Alterar extends javax.swing.JFrame {
                 .replace(".", "")
                 .replace("-", "")
                 .trim();
+        
         if (cpfWithoutFormatting.equals("")) {
             txtCPF.setBorder(redBorder);
             flag = false;
-        } 
-        else {
+        } else {
             txtCPF.setBorder(blackBorder);
         }
 
@@ -665,9 +638,9 @@ public class Alterar extends javax.swing.JFrame {
 
     private void btnConfirmar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmar2ActionPerformed
         LineBorder redBorder = new LineBorder(Color.RED); 
-        LineBorder blackBorder = new LineBorder(Color.BLACK); 
+        LineBorder blackBorder = new LineBorder(Color.BLACK);
         boolean flag = true; 
-        
+
         String telefoneDigitado = txtTelefone.getText();
         String emailDigitado = txtEmail.getText();
         
@@ -682,9 +655,9 @@ public class Alterar extends javax.swing.JFrame {
             txtEmail.setForeground(Color.BLACK);
             txtEmail.setBorder(blackBorder);
             JOptionPane.showMessageDialog(null, 
-                    "Dados salvos.", "Alerta", 
+                    "Dados inseridos", "Alerta", 
                     JOptionPane.WARNING_MESSAGE);
-            enviar();
+            criar();
             this.dispose();
         }
     }//GEN-LAST:event_btnConfirmar2ActionPerformed
@@ -708,28 +681,30 @@ public class Alterar extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Alterar.class
+            java.util.logging.Logger.getLogger(Cadastrar.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Alterar.class
+            java.util.logging.Logger.getLogger(Cadastrar.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Alterar.class
+            java.util.logging.Logger.getLogger(Cadastrar.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
 
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Alterar.class
+            java.util.logging.Logger.getLogger(Cadastrar.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Alterar().setVisible(true);
+                new Cadastrar().setVisible(true);
             }
         });
     }
